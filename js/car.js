@@ -24,10 +24,21 @@ class Car{
     }
 
     getCabin(){
-        const cabin =new Mesh(
-        new BoxBufferGeometry(33,24,12),
-        new MeshLambertMaterial({color:0xffffff})
-        );
+        const carFrontTexture = this.getCarFrontTexture();
+        const carBackTexture = this.getCarFrontTexture();
+
+        const carRightSideTexture = this.getCarSideTexture();
+        const carLeftSideTexture = this.getCarSideTexture();
+
+        const cabin = new Mesh(new BoxBufferGeometry(33,24,12),[
+            new MeshLambertMaterial({map:carFrontTexture}),
+            new MeshLambertMaterial({map:carBackTexture}),
+            new MeshLambertMaterial({map:carLeftSideTexture}),
+            new MeshLambertMaterial({map:carRightSideTexture}),
+            new MeshLambertMaterial({color:0xffffff}),
+            new MeshLambertMaterial({color:0xffffff})
+        ])
+
         cabin.position.x = -6;
         cabin.position.z = 25.5;
         return cabin;
@@ -58,7 +69,7 @@ class Car{
         const canvas =document.createElement("canvas");
         canvas.width = 64;
         canvas.height = 32;
-        const context = canvas.getContxt('2d');
+        const context = canvas.getContext('2d');
         context.fillStyle = "#ffffff";
         context.fillRect(0,0,64,32);
 
