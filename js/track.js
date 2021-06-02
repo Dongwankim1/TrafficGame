@@ -1,4 +1,4 @@
-import { CanvasTexture, Mesh, MeshLambertMaterial, PlaneBufferGeometry, Shape, TetrahedronGeometry } from "./lib/three.module.js";
+import { CanvasTexture, Mesh, MeshLambertMaterial, PlaneBufferGeometry, Shape, ShapeBufferGeometry, TetrahedronGeometry } from "./lib/three.module.js";
 
 const trackRadius = 225;
 const trackWidth =45;
@@ -70,16 +70,96 @@ export function getLeftIsland(){
         -arcAngle1,
         false
     )
-
+        
     islandLeft.absarc(
         arcCenterX,
         0,
         outerTrackRadius,
         Math.PI+arcAngle2,
-        Math.PI - arcAngle2,
+        Math.PI-arcAngle2,
         true
     )
-    
+  
 
     return islandLeft;
+}
+
+export function getMiddleIsland(){
+    const islandMiddle= new Shape();
+    
+    islandMiddle.absarc(
+        -arcCenterX,
+        0,
+        innerTrackRadius,
+        arcAngle3,
+        -arcAngle3,
+        true
+    )
+
+    islandMiddle.absarc(
+        arcCenterX,
+        0,
+        innerTrackRadius,
+        Math.PI+arcAngle3,
+        Math.PI-arcAngle3,
+        true
+    )
+
+    return islandMiddle;
+}
+
+export function getRightIsland(){
+    const islandRight = new Shape();
+
+    islandRight.absarc(
+        arcCenterX,
+        0,
+        innerTrackRadius,
+        Math.PI-arcAngle1,
+        Math.PI+arcAngle1,
+        true
+    )
+
+    islandRight.absarc(
+        -arcCenterX,
+        0,
+        outerTrackRadius,
+        -arcAngle2,
+        arcAngle2,
+        false
+    );
+
+    return islandRight;
+}
+
+export function getOuterField(mapWidth,mapHeight){
+    const field = new Shape();
+
+    field.moveTo(-mapWidth/2,-mapHeight/2);
+    field.lineTo(0,-mapHeight/2);
+
+    field.absarc(
+        -arcCenterX,
+        0,
+        outerTrackRadius,
+        -arcAngle4,
+        arcAngle4,
+        true
+    );
+
+    field.absarc(
+        arcCenterX,
+        0,
+        outerTrackRadius,
+        Math.PI - arcAngle4,
+        Math.PI + arcAngle4,
+        true
+    )
+
+    field.lineTo(0,-mapHeight/2);
+    field.lineTo(mapWidth/2,-mapHeight/2);
+    field.lineTo(mapWidth/2,mapHeight/2);
+    field.lineTo(-mapWidth/2,mapHeight/2);
+
+    return field;
 }

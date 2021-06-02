@@ -6,7 +6,8 @@ class Car{
     }
     getCar(){
         const car = new Group();
-
+        car.position.x = -100;
+        car.position.y = 200;
         car.add(this.getBackWheel());
         car.add(this.getFrontWheel());
         car.add(this.getmain());
